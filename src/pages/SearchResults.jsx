@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useDebounce } from "react-use";
 import Fuse from "fuse.js";
+import DishCard from "../components/DishCard";
 
 const GEO_API_KEY = import.meta.env.VITE_RAPIDAPI_KEY;
 const GEO_API_HOST = "wft-geo-db.p.rapidapi.com";
@@ -134,16 +135,7 @@ const SearchResults = () => {
       <h2 className="text-xl font-semibold mb-4">Dishes from {area} cuisine</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {dishes.map((dish) => (
-          <div key={dish.idMeal} className="bg-white rounded shadow">
-            <img
-              src={dish.strMealThumb}
-              alt={dish.strMeal}
-              className="w-full h-48 object-cover rounded-t"
-            />
-            <div className="p-2">
-              <h3 className="text-lg font-medium">{dish.strMeal}</h3>
-            </div>
-          </div>
+          <DishCard key={dish.idMeal} dish={dish} />
         ))}
       </div>
     </div>
