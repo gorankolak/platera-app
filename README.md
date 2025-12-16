@@ -1,8 +1,8 @@
-# Platera 🍽️
+# Platera
 
 Search and discover authentic local dishes by city — powered by TheMealDB and GeoDB APIs.
 
-## 🌍 Features
+## Features
 
 - Search any city → get local dishes
 - Fuzzy matching of country → cuisine
@@ -11,7 +11,7 @@ Search and discover authentic local dishes by city — powered by TheMealDB and 
 - Responsive UI with Tailwind CSS
 - Built with React + Vite
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - React (w/ Vite)
 - Tailwind CSS
@@ -19,7 +19,7 @@ Search and discover authentic local dishes by city — powered by TheMealDB and 
 - GeoDB Cities API (via RapidAPI)
 - TheMealDB API
 
-## 🔧 Getting Started
+## Getting Started
 
 ```bash
 git clone https://github.com/gorankolak/platera-app
