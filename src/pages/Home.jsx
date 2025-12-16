@@ -2,7 +2,7 @@ import SearchBar from "../components/SearchBar";
 
 const Home = () => {
   return (
-    <div>
+    <div className="text-center">
       <h1 className="text-6xl">Platera</h1>
       <h2 className="text-xl">Find local flavor. Anywhere</h2>
 
