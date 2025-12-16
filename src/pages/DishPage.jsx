@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useFavoritesContext } from "../context/FavoritesContext";
+import { fetchDishById } from "../services/meals";
 
 const DishPage = () => {
   const { id } = useParams();
@@ -10,15 +11,14 @@ const DishPage = () => {
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesContext();
 
   useEffect(() => {
-    const fetchDishById = async () => {
+    const getDish = async () => {
       setLoading(true);
+      setError("");
+
       try {
-        const res = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-        );
-        const data = await res.json();
-        if (data?.meals?.length > 0) {
-          setDish(data.meals[0]);
+        const meal = await fetchDishById(id);
+        if (meal) {
+          setDish(meal);
         } else {
           setError("Dish not found");
         }
@@ -30,7 +30,7 @@ const DishPage = () => {
       }
     };
 
-    fetchDishById();
+    getDish();
   }, [id]);
 
   const getIngredientList = (dish) => {
