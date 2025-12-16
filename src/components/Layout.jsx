@@ -8,7 +8,7 @@ const Layout = () => {
           Platera
         </Link>
         <nav>
-          <Link to="/favorites" className="mr-4">
+          <Link to="/favorites" className="mr-4 hover:underline">
             Favorites
           </Link>
         </nav>

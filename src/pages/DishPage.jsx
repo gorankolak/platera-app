@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useFavoritesContext } from "../context/FavoritesContext";
 
 const DishPage = () => {
   const { id } = useParams();
   const [dish, setDish] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesContext();
 
   useEffect(() => {
     const fetchDishById = async () => {
@@ -46,6 +48,8 @@ const DishPage = () => {
     return ingredients;
   };
 
+  console.log("Adding favorite:", dish);
+
   if (loading) return <p className="p-4">Loading dish...</p>;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
 
@@ -82,6 +86,23 @@ const DishPage = () => {
           />
         </div>
       )}
+
+      <button
+        onClick={() =>
+          isFavorite(dish.idMeal)
+            ? removeFavorite(dish.idMeal)
+            : addFavorite(dish)
+        }
+        className={`mt-4 px-4 py-2 rounded font-semibold ${
+          isFavorite(dish.idMeal)
+            ? "bg-red-500 text-white"
+            : "bg-gray-200 text-gray-800"
+        }`}
+      >
+        {isFavorite(dish.idMeal)
+          ? "Remove from Favorites ❤️"
+          : "Add to Favorites 🤍"}
+      </button>
     </div>
   );
 };
