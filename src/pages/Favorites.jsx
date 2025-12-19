@@ -11,7 +11,7 @@ const Favorites = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Your Favorites</h2>
+      <h2 className="text-4xl font-bold mb-4">Your Favorites</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {favorites.map((dish) => (
           <div
@@ -25,10 +25,10 @@ const Favorites = () => {
               onClick={() => navigate(`/dish/${dish.idMeal}`)}
             />
             <div className="p-2">
-              <h3 className="text-lg font-medium">{dish.strMeal}</h3>
+              <h3 className="text-lg">{dish.strMeal}</h3>
               <button
                 onClick={() => removeFavorite(dish.idMeal)}
-                className="mt-2 text-sm text-red-500"
+                className="mt-2 text-sm text-amber"
               >
                 Remove ❤️
               </button>

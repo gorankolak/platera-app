@@ -8,7 +8,7 @@ Search and discover authentic local dishes by city — powered by TheMealDB and 
 - Fuzzy matching of country → cuisine
 - View full dish recipes and YouTube instructions
 - Save favorite meals (localStorage-based)
-- Responsive UI with Tailwind CSS
+- (work in progress) Responsive UI with Tailwind CSS
 - Built with React + Vite
 
 ## Tech Stack

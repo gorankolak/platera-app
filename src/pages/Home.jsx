@@ -2,12 +2,20 @@ import SearchBar from "../components/SearchBar";
 
 const Home = () => {
   return (
-    <div className="text-center">
-      <h1 className="text-6xl">Platera</h1>
-      <h2 className="text-xl">Find local flavor. Anywhere</h2>
+    <>
+      <div class="mt-8 mb-10 text-center">
+        <h2 class="max-w-70 sm:max-w-xl mx-auto text-5xl font-bold font-display mb-4 leading-tight">
+          Find local flavor.{" "}
+          <span class="block text-amber text-primary italic">Anywhere.</span>
+        </h2>
+        <p class="text-text-muted text-base max-w-70 mx-auto leading-relaxed">
+          Discover authentic dishes, hidden gems, and traditional recipes around
+          the globe.
+        </p>
+      </div>
 
       <SearchBar />
-    </div>
+    </>
   );
 };
 

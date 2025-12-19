@@ -55,7 +55,7 @@ const DishPage = () => {
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-4">{dish.strMeal}</h2>
+      <h2 className="text-4xl font-bold mb-4">{dish.strMeal}</h2>
       <img
         src={dish.strMealThumb}
         alt={dish.strMeal}
@@ -93,15 +93,13 @@ const DishPage = () => {
             ? removeFavorite(dish.idMeal)
             : addFavorite(dish)
         }
-        className={`mt-4 px-4 py-2 rounded font-semibold ${
+        className={`w-full mt-4 px-4 py-4 rounded-2xl font-semibold ${
           isFavorite(dish.idMeal)
-            ? "bg-red-500 text-white"
-            : "bg-gray-200 text-gray-800"
+            ? "bg-gray-200 text-darkgray"
+            : "bg-amber text-white"
         }`}
       >
-        {isFavorite(dish.idMeal)
-          ? "Remove from Favorites ❤️"
-          : "Add to Favorites 🤍"}
+        {isFavorite(dish.idMeal) ? "Remove from Favorites" : "Add to Favorites"}
       </button>
     </div>
   );

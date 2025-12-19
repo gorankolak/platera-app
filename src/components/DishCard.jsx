@@ -14,7 +14,7 @@ const DishCard = ({ dish }) => {
         className="w-full h-48 object-cover rounded-t"
       />
       <div className="p-2">
-        <h3 className="text-lg font-medium">{dish.strMeal}</h3>
+        <h3 className="text-lg">{dish.strMeal}</h3>
       </div>
     </div>
   );

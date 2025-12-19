@@ -95,11 +95,13 @@ const SearchResults = () => {
   }, [area]);
 
   if (loading) return <p className="p-4 text-center">Loading...</p>;
-  if (error) return <p className="p-4 text-center text-red-500">{error}</p>;
+  if (error) return <p className="p-4 text-center text-amber">{error}</p>;
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">Dishes from {area} cuisine</h2>
+      <h2 className="text-4xl font-semibold mb-4">
+        Dishes from <span class="text-amber italic">{area}</span> cuisine
+      </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {dishes.map((dish) => (
           <DishCard key={dish.idMeal} dish={dish} />

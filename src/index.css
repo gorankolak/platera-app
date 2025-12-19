@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --font-display: "Playfair Display", serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --color-amber: #D97706;
+  --color-cream: #FDFBF7;
+  --color-darkgray: #1F2937;
+  --color-mediumgray: #6B7280;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-mediumgray;
+  }
+}
+
+@layer components {
+  h1, h2, h3 {
+    @apply text-darkgray font-display font-bold;
+  }
+}
