@@ -1,19 +1,33 @@
+import { Heart } from "lucide-react";
 import { Outlet, Link } from "react-router";
+import { useFavoritesContext } from "../context/FavoritesContext";
 
 const Layout = () => {
+  const { favorites } = useFavoritesContext();
+  const hasFavorites = favorites.length > 0;
+  const iconClasses = `mr-2 text-mediumgray ${
+    hasFavorites ? "fill-mediumgray" : ""
+  }`;
+
   return (
     // styling in progress - logo and icons to be added
     <div className="flex flex-col min-h-screen max-w-7xl mx-auto">
       <header className="flex justify-between items-center pt-8 px-6 pb-4">
         <Link to="/" className="font-display font-bold text-2xl text-darkgray">
-          Platera
+          <img src="/platera-logo.svg" alt="Platera" className="h-8" />
         </Link>
         <nav>
           <Link
             to="/favorites"
-            className="mr-4 text-mediumgray hover:underline"
+            className="flex items-center mr-4 text-mediumgray transition-transform hover:scale-105"
           >
-            Favorites
+            <Heart className={iconClasses} />
+            <span>Favorites</span>
+            {hasFavorites && (
+              <span className="text-xs ml-1 relative -top-1">
+                {favorites.length}
+              </span>
+            )}
           </Link>
         </nav>
       </header>

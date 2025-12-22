@@ -33,7 +33,7 @@ const SearchResults = () => {
       try {
         const countryName = await fetchCountryByCity(debouncedCity);
         if (!countryName) {
-          setError("City not found");
+          setError("City not found *Page work in progress*");
         } else {
           setCountry(countryName);
         }
@@ -100,7 +100,7 @@ const SearchResults = () => {
   return (
     <div className="p-4">
       <h2 className="text-4xl font-semibold mb-4">
-        Dishes from <span class="text-amber italic">{area}</span> cuisine
+        Dishes from <span className="text-amber italic">{area}</span> cuisine
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {dishes.map((dish) => (

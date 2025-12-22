@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useFavoritesContext } from "../context/FavoritesContext";
 import { fetchDishById } from "../services/meals";
+import { Heart } from "lucide-react";
 
 const DishPage = () => {
   const { id } = useParams();
@@ -48,10 +49,13 @@ const DishPage = () => {
     return ingredients;
   };
 
-  console.log("Adding favorite:", dish);
-
   if (loading) return <p className="p-4">Loading dish...</p>;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
+
+  const isFav = isFavorite(dish.idMeal);
+  const iconClasses = `mr-2 ${
+    isFav ? "text-mediumgray" : "fill-white text-white"
+  }`;
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
@@ -89,17 +93,17 @@ const DishPage = () => {
 
       <button
         onClick={() =>
-          isFavorite(dish.idMeal)
-            ? removeFavorite(dish.idMeal)
-            : addFavorite(dish)
+          isFav ? removeFavorite(dish.idMeal) : addFavorite(dish)
         }
-        className={`w-full mt-4 px-4 py-4 rounded-2xl font-semibold ${
-          isFavorite(dish.idMeal)
-            ? "bg-gray-200 text-darkgray"
-            : "bg-amber text-white"
+        className={`flex items-center justify-center w-full mt-4 px-4 py-4 rounded-2xl 
+font-semibold cursor-pointer transition active:scale-[0.98] ${
+          isFav
+            ? "bg-gray-200 text-darkgray hover:bg-gray-300"
+            : "bg-amber text-white hover:brightness-95"
         }`}
       >
-        {isFavorite(dish.idMeal) ? "Remove from Favorites" : "Add to Favorites"}
+        <Heart className={iconClasses} />
+        {isFav ? "Remove from Favorites" : "Add to Favorites"}
       </button>
     </div>
   );

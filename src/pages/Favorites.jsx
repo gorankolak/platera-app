@@ -1,12 +1,19 @@
-import { useFavorites } from "../hooks/useFavorites";
+import { Heart } from "lucide-react";
+import { useFavoritesContext } from "../context/FavoritesContext";
 import { useNavigate } from "react-router";
 
 const Favorites = () => {
-  const { favorites, removeFavorite } = useFavorites();
+  const { favorites, removeFavorite } = useFavoritesContext();
   const navigate = useNavigate();
 
   if (favorites.length === 0) {
-    return <p className="p-4 text-center">No favorites saved yet.</p>;
+    // page work in progress
+    return (
+      <p className="p-4 text-center">
+        No favorites saved yet. <br />
+        *Page work in progress*
+      </p>
+    );
   }
 
   return (
@@ -16,7 +23,7 @@ const Favorites = () => {
         {favorites.map((dish) => (
           <div
             key={dish.idMeal}
-            className="bg-white rounded shadow relative hover:shadow-lg transition"
+            className="bg-white rounded shadow relative hover:shadow-lg transition cursor-pointer"
           >
             <img
               src={dish.strMealThumb}
@@ -28,9 +35,10 @@ const Favorites = () => {
               <h3 className="text-lg">{dish.strMeal}</h3>
               <button
                 onClick={() => removeFavorite(dish.idMeal)}
-                className="mt-2 text-sm text-amber"
+                className="flex items-center mt-2 text-sm text-amber cursor-pointer transition hover:opacity-90 active:scale-[0.98]"
               >
-                Remove ❤️
+                <Heart className="mr-2" />
+                Remove
               </button>
             </div>
           </div>
