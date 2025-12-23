@@ -1,6 +1,7 @@
 import { Search as SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import Button from "./Button";
 
 const SearchBar = () => {
   const [input, setInput] = useState("");
@@ -32,12 +33,9 @@ const SearchBar = () => {
           className="block w-full pl-12 pr-4 py-4 rounded-2xl border-none bg-white text-mediumgray placeholder:text-gray-400 focus:ring-2 focus:ring-primary/20 shadow-sm"
         />
 
-        <button
-          type="submit"
-          className="bg-darkgray text-white px-4 py-4 rounded-2xl cursor-pointer transition hover:opacity-90 active:scale-[0.98]"
-        >
+        <Button type="submit" variant="dark">
           Search
-        </button>
+        </Button>
       </form>
     </div>
   );

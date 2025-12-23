@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDebounce } from "react-use";
 import DishCard from "../components/DishCard";
 import { fetchCountryByCity } from "../services/geo";
 import { matchCountryToArea, fetchMealsByArea } from "../services/meals";
+import EmptyState from "../components/EmptyState";
+import Button from "../components/Button";
+import { MapPinX, Search } from "lucide-react";
 
 const SearchResults = () => {
   const { city } = useParams();
@@ -13,6 +16,7 @@ const SearchResults = () => {
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useDebounce(
     () => {
@@ -33,7 +37,7 @@ const SearchResults = () => {
       try {
         const countryName = await fetchCountryByCity(debouncedCity);
         if (!countryName) {
-          setError("City not found *Page work in progress*");
+          setError("City not found");
         } else {
           setCountry(countryName);
         }
@@ -95,14 +99,31 @@ const SearchResults = () => {
   }, [area]);
 
   if (loading) return <p className="p-4 text-center">Loading...</p>;
-  if (error) return <p className="p-4 text-center text-amber">{error}</p>;
+  if (error)
+    return (
+      <EmptyState
+        title={error}
+        message={
+          "We couldn't find any culinary gems for that loaction. Please try checking the spelling or search for another city"
+        }
+        icon={<MapPinX className="w-20 h-20 mb-16 text-gray-400" />}
+        action={
+          <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
+            Explore dishes
+          </Button>
+        }
+      />
+    );
 
   return (
     <div className="p-4">
-      <h2 className="text-4xl font-semibold mb-4">
+      <h2 className="text-4xl text-center font-semibold mb-4">
         Dishes from <span className="text-amber italic">{area}</span> cuisine
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <p className="mb-8 text-center">
+        We found {dishes.length} local specialties for you to explore
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
         {dishes.map((dish) => (
           <DishCard key={dish.idMeal} dish={dish} />
         ))}

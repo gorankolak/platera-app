@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useFavoritesContext } from "../context/FavoritesContext";
 import { fetchDishById } from "../services/meals";
 import { Heart } from "lucide-react";
+import Button from "../components/Button";
 
 const DishPage = () => {
   const { id } = useParams();
@@ -58,6 +59,7 @@ const DishPage = () => {
   }`;
 
   return (
+    // styling page work in progress
     <div className="p-4 max-w-4xl mx-auto">
       <h2 className="text-4xl font-bold mb-4">{dish.strMeal}</h2>
       <img
@@ -79,7 +81,7 @@ const DishPage = () => {
       <p className="mb-6 whitespace-pre-line">{dish.strInstructions}</p>
 
       {dish.strYoutube && (
-        <div className="aspect-video">
+        <div className="aspect-video mb-4">
           <iframe
             src={`https://www.youtube.com/embed/${
               dish.strYoutube.split("v=")[1]
@@ -91,20 +93,20 @@ const DishPage = () => {
         </div>
       )}
 
-      <button
+      <Button
+        fullWidth
+        variant={isFav ? "secondary" : "primary"}
+        icon={
+          <Heart
+            className={isFav ? "text-mediumgray" : "fill-white text-white"}
+          />
+        }
         onClick={() =>
           isFav ? removeFavorite(dish.idMeal) : addFavorite(dish)
         }
-        className={`flex items-center justify-center w-full mt-4 px-4 py-4 rounded-2xl 
-font-semibold cursor-pointer transition active:scale-[0.98] ${
-          isFav
-            ? "bg-gray-200 text-darkgray hover:bg-gray-300"
-            : "bg-amber text-white hover:brightness-95"
-        }`}
       >
-        <Heart className={iconClasses} />
         {isFav ? "Remove from Favorites" : "Add to Favorites"}
-      </button>
+      </Button>
     </div>
   );
 };

@@ -10,29 +10,34 @@ const Layout = () => {
   }`;
 
   return (
-    // styling in progress - logo and icons to be added
-    <div className="flex flex-col min-h-screen max-w-7xl mx-auto">
-      <header className="flex justify-between items-center pt-8 px-6 pb-4">
-        <Link to="/" className="font-display font-bold text-2xl text-darkgray">
-          <img src="/platera-logo.svg" alt="Platera" className="h-8" />
-        </Link>
-        <nav>
+    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
+      <header>
+        <div className="max-w-5xl mx-auto flex justify-between items-center pt-8 px-6 pb-4">
           <Link
-            to="/favorites"
-            className="flex items-center mr-4 text-mediumgray transition-transform hover:scale-105"
+            to="/"
+            className="font-display font-bold text-2xl text-darkgray"
           >
-            <Heart className={iconClasses} />
-            <span>Favorites</span>
-            {hasFavorites && (
-              <span className="text-xs ml-1 relative -top-1">
-                {favorites.length}
-              </span>
-            )}
+            <img src="/platera-logo.svg" alt="Platera" className="h-8" />
           </Link>
-        </nav>
+
+          <nav>
+            <Link
+              to="/favorites"
+              className="flex items-center mr-4 text-mediumgray transition-transform hover:scale-105"
+            >
+              <Heart className={iconClasses} />
+              <span>Favorites</span>
+              {hasFavorites && (
+                <span className="text-xs ml-1 relative -top-1">
+                  {favorites.length}
+                </span>
+              )}
+            </Link>
+          </nav>
+        </div>
       </header>
 
-      <main className="flex-1 px-3 pb-4">
+      <main className="max-w-5xl mx-auto w-full px-3 pb-4">
         <Outlet />
       </main>
 
