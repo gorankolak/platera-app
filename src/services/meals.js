@@ -1,6 +1,6 @@
-import Fuse from 'fuse.js';
+import Fuse from "fuse.js";
 
-const BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
+const BASE_URL = "https://www.themealdb.com/api/json/v1/1";
 
 export const fetchAvailableAreas = async () => {
   const res = await fetch(`${BASE_URL}/list.php?a=list`);
@@ -21,14 +21,17 @@ export const matchCountryToArea = async (country) => {
 };
 
 export const fetchMealsByArea = async (area) => {
-  const res = await fetch(`${BASE_URL}/filter.php?a=${encodeURIComponent(area)}`);
+  const res = await fetch(
+    `${BASE_URL}/filter.php?a=${encodeURIComponent(area)}`,
+  );
   const data = await res.json();
   return data?.meals || [];
 };
 
 export const fetchDishById = async (id) => {
-  const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const res = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,
+  );
   const data = await res.json();
   return data?.meals?.[0] || null;
 };
-

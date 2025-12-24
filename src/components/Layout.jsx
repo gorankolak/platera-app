@@ -10,12 +10,12 @@ const Layout = () => {
   }`;
 
   return (
-    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
       <header>
-        <div className="max-w-5xl mx-auto flex justify-between items-center pt-8 px-6 pb-4">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-6">
           <Link
             to="/"
-            className="font-display font-bold text-2xl text-darkgray"
+            className="font-display text-darkgray text-2xl font-bold"
           >
             <img src="/platera-logo.svg" alt="Platera" className="h-8" />
           </Link>
@@ -23,12 +23,12 @@ const Layout = () => {
           <nav>
             <Link
               to="/favorites"
-              className="flex items-center mr-4 text-mediumgray transition-transform hover:scale-105"
+              className="text-mediumgray flex items-center transition-transform hover:scale-105"
             >
               <Heart className={iconClasses} />
               <span>Favorites</span>
               {hasFavorites && (
-                <span className="text-xs ml-1 relative -top-1">
+                <span className="relative -top-1 ml-1 text-xs">
                   {favorites.length}
                 </span>
               )}
@@ -37,11 +37,11 @@ const Layout = () => {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto w-full px-3 pb-4">
+      <main className="mx-auto w-full max-w-5xl">
         <Outlet />
       </main>
 
-      <footer className="bg-white text-center text-mediumgray border-t border-gray-200 pt-8 px-6 pb-4">
+      <footer className="text-mediumgray border-t border-gray-200 bg-white px-4 py-6 text-center">
         &copy; {new Date().getFullYear()} Platera
       </footer>
     </div>

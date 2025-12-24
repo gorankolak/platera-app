@@ -1,22 +1,27 @@
 import { useNavigate } from "react-router";
 
-const DishCard = ({ dish }) => {
+const DishCard = ({ dish, action, area }) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="cursor-pointer bg-white rounded-3xl shadow hover:shadow-lg transition"
+    <article
+      className="relative cursor-pointer rounded-3xl bg-white shadow transition hover:shadow-lg"
       onClick={() => navigate(`/dish/${dish.idMeal}`)}
     >
       <img
         src={dish.strMealThumb}
         alt={dish.strMeal}
-        className="w-full h-48 object-cover rounded-t-3xl"
+        className="h-48 w-full rounded-t-3xl object-cover"
       />
-      <div className="p-4">
-        <h3 className="text-lg">{dish.strMeal}</h3>
+
+      <div className="flex flex-col gap-3 p-4">
+        <h3 className="text-lg leading-snug font-semibold">{dish.strMeal}</h3>
+
+        {area && area}
+
+        {action && action}
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -3,6 +3,7 @@ import { useFavoritesContext } from "../context/FavoritesContext";
 import { useNavigate } from "react-router";
 import EmptyState from "../components/EmptyState";
 import Button from "../components/Button";
+import DishCard from "../components/DishCard";
 
 const Favorites = () => {
   const { favorites, removeFavorite } = useFavoritesContext();
@@ -14,7 +15,7 @@ const Favorites = () => {
         title="No favorite dishes yet!"
         message="Your saved dishes will appear here. Start exploring cuisines and tap the heart
   icon to keep track of meals you love."
-        icon={<HeartOff className="w-20 h-20 mb-16 text-gray-400" />}
+        icon={<HeartOff className="mb-16 h-20 w-20 text-gray-400" />}
         action={
           <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
             Explore dishes
@@ -25,40 +26,37 @@ const Favorites = () => {
   }
 
   return (
-    <div className="p-4">
-      <h2 className="text-4xl font-bold mb-8">Your Favorites</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {favorites.map((dish) => (
-          <div
-            key={dish.idMeal}
-            className="relative flex flex-col bg-white rounded-3xl p-3 shadow hover:shadow-lg transition cursor-pointer"
-          >
-            <img
-              src={dish.strMealThumb}
-              alt={dish.strMeal}
-              className="w-full h-48 mb-2 object-cover rounded-3xl"
-              onClick={() => navigate(`/dish/${dish.idMeal}`)}
+    <div className="px-4 py-6">
+      <div className="flex flex-col gap-8 lg:gap-10">
+        <h2 className="text-4xl font-bold">Your Favorites</h2>
+
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {favorites.map((dish) => (
+            <DishCard
+              key={dish.idMeal}
+              dish={dish}
+              action={
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFavorite(dish.idMeal);
+                  }}
+                  className="absolute top-4 right-4 rounded-full bg-white/90 p-2 transition hover:scale-105 active:scale-95"
+                  aria-label="Remove from favorites"
+                >
+                  <Heart className="fill-amber text-amber h-4 w-4" />
+                </button>
+              }
+              area={
+                <div className="flex items-center gap-2 pt-2 text-gray-400">
+                  <MapPin className="h-4 w-4" />
+                  <p>{dish.strArea}</p>
+                </div>
+              }
             />
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                removeFavorite(dish.idMeal);
-              }}
-              className="absolute top-4 right-4 bg-white/90 rounded-full p-2 
-               hover:scale-105 transition active:scale-95"
-              aria-label="Remove from favorites"
-            >
-              <Heart className="fill-amber text-amber w-4 h-4" />
-            </button>
-
-            <h3 className="text-lg mb-2">{dish.strMeal}</h3>
-            <p className="flex mb-2 text-l text-gray-400">
-              <MapPin className="mr-2" />
-              {dish.strArea}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

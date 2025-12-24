@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from "react";
 
-const STORAGE_KEY = 'platera-favorites';
+const STORAGE_KEY = "platera-favorites";
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState(() => {

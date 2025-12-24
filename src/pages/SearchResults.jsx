@@ -23,7 +23,7 @@ const SearchResults = () => {
       setDebouncedCity(city);
     },
     500,
-    [city]
+    [city],
   );
 
   // Step 1: Fetch country from city
@@ -106,7 +106,7 @@ const SearchResults = () => {
         message={
           "We couldn't find any culinary gems for that loaction. Please try checking the spelling or search for another city"
         }
-        icon={<MapPinX className="w-20 h-20 mb-16 text-gray-400" />}
+        icon={<MapPinX className="mb-16 h-20 w-20 text-gray-400" />}
         action={
           <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
             Explore dishes
@@ -116,17 +116,24 @@ const SearchResults = () => {
     );
 
   return (
-    <div className="p-4">
-      <h2 className="text-4xl text-center font-semibold mb-4">
-        Dishes from <span className="text-amber italic">{area}</span> cuisine
-      </h2>
-      <p className="mb-8 text-center">
-        We found {dishes.length} local specialties for you to explore
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-        {dishes.map((dish) => (
-          <DishCard key={dish.idMeal} dish={dish} />
-        ))}
+    <div className="px-4 py-6">
+      <div className="flex flex-col gap-8 lg:gap-10">
+        <header className="flex flex-col gap-2 text-center">
+          <h2 className="text-4xl font-semibold">
+            Dishes from <span className="text-amber italic">{area}</span>{" "}
+            cuisine
+          </h2>
+
+          <p className="text-text-muted">
+            We found {dishes.length} local specialties for you to explore
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {dishes.map((dish) => (
+            <DishCard key={dish.idMeal} dish={dish} />
+          ))}
+        </div>
       </div>
     </div>
   );
