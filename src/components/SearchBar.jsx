@@ -11,7 +11,7 @@ const SearchBar = () => {
     e.preventDefault();
     const city = input.trim();
 
-    if (city === 0) return;
+    if (!city) return;
 
     navigate(`/search/${encodeURIComponent(city.toLowerCase())}`);
     setInput("");
