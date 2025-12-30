@@ -55,7 +55,7 @@ const SearchResults = () => {
       }
     };
 
-    getCountry();
+    void getCountry();
   }, [debouncedCity]);
 
   // Step 2: Match country to cuisine area
@@ -76,7 +76,7 @@ const SearchResults = () => {
       }
     };
 
-    getArea();
+    void getArea();
   }, [country]);
 
   // Step 3: Fetch dishes for area
@@ -101,7 +101,7 @@ const SearchResults = () => {
       }
     };
 
-    getDishes();
+    void getDishes();
   }, [area]);
 
   if (loading) {
@@ -115,7 +115,11 @@ const SearchResults = () => {
         message="We couldn't find any culinary gems for that location. Please try checking the spelling or search for another city."
         icon={<MapPinX className="mb-16 h-20 w-20 text-gray-400" />}
         action={
-          <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
+          <Button
+            fullWidth
+            icon={<Search />}
+            onClick={() => void navigate("/")}
+          >
             Explore dishes
           </Button>
         }

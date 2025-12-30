@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { BrowserRouter } from "react-router";
 import { createRoot } from "react-dom/client";
 
-import { FavoritesProvider } from "./context/FavoritesContext";
+import { FavoritesProvider } from "./context/FavoritesProvider";
 import App from "./App";
 import "./index.css";
 

@@ -16,8 +16,10 @@ const getIngredientList = (dish: Meal): IngredientItem[] => {
   const ingredients: IngredientItem[] = [];
 
   for (let i = 1; i <= 20; i++) {
-    const ingredient = dish[`strIngredient${i}` as keyof Meal];
-    const measure = dish[`strMeasure${i}` as keyof Meal];
+    const ingredientKey = `strIngredient${String(i)}` as keyof Meal;
+    const measureKey = `strMeasure${String(i)}` as keyof Meal;
+    const ingredient = dish[ingredientKey];
+    const measure = dish[measureKey];
 
     if (typeof ingredient === "string" && ingredient.trim()) {
       ingredients.push({
@@ -64,7 +66,7 @@ const DishPage = () => {
       }
     };
 
-    getDish();
+    void getDish();
   }, [id]);
 
   if (loading) return <p className="p-4">Loading dish...</p>;
@@ -108,9 +110,13 @@ const DishPage = () => {
               className={isFav ? "text-mediumgray" : "fill-white text-white"}
             />
           }
-          onClick={() =>
-            isFav ? removeFavorite(dish.idMeal) : addFavorite(dish)
-          }
+          onClick={() => {
+            if (isFav) {
+              removeFavorite(dish.idMeal);
+            } else {
+              addFavorite(dish);
+            }
+          }}
         >
           {isFav ? "Remove from Favorites" : "Add to Favorites"}
         </Button>

@@ -14,7 +14,7 @@ const SearchBar = () => {
 
     if (!city) return;
 
-    navigate(`/search/${encodeURIComponent(city.toLowerCase())}`);
+    void navigate(`/search/${encodeURIComponent(city.toLowerCase())}`);
     setInput("");
   };
 

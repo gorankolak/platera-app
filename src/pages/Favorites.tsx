@@ -18,7 +18,11 @@ const Favorites = () => {
         message="Your saved dishes will appear here. Start exploring cuisines and tap the heart icon to keep track of meals you love."
         icon={<HeartOff className="mb-16 h-20 w-20 text-gray-400" />}
         action={
-          <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
+          <Button
+            fullWidth
+            icon={<Search />}
+            onClick={() => void navigate("/")}
+          >
             Explore dishes
           </Button>
         }

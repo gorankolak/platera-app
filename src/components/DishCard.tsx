@@ -14,7 +14,7 @@ const DishCard = ({ dish, action, area }: DishCardProps) => {
   return (
     <article
       className="relative cursor-pointer rounded-3xl bg-white shadow transition hover:shadow-lg"
-      onClick={() => navigate(`/dish/${dish.idMeal}`)}
+      onClick={() => void navigate(`/dish/${dish.idMeal}`)}
     >
       <img
         src={dish.strMealThumb}
