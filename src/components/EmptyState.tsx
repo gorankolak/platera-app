@@ -1,4 +1,13 @@
-const EmptyState = ({ title, message, icon, action }) => (
+import type { ReactNode } from "react";
+
+type EmptyStateProps = {
+  title: string;
+  message: string;
+  icon?: ReactNode;
+  action?: ReactNode;
+};
+
+const EmptyState = ({ title, message, icon, action }: EmptyStateProps) => (
   <div className="flex h-full items-center justify-center px-6 text-center">
     <div className="flex max-w-md flex-col items-center gap-6">
       <img
@@ -18,7 +27,7 @@ const EmptyState = ({ title, message, icon, action }) => (
         <p className="text-mediumgray">{message}</p>
       </header>
 
-      {action && action}
+      {action}
     </div>
   </div>
 );

@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router";
+import type { ReactNode } from "react";
+import type { Meal, MealPreview } from "../types/mealdb";
 
-const DishCard = ({ dish, action, area }) => {
+type DishCardProps = {
+  dish: Meal | MealPreview;
+  action?: ReactNode;
+  area?: ReactNode;
+};
+
+const DishCard = ({ dish, action, area }: DishCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -17,9 +25,9 @@ const DishCard = ({ dish, action, area }) => {
       <div className="flex flex-col gap-3 p-4">
         <h3 className="text-lg leading-snug font-semibold">{dish.strMeal}</h3>
 
-        {area && area}
+        {area}
 
-        {action && action}
+        {action}
       </div>
     </article>
   );

@@ -1,6 +1,6 @@
 import { Heart } from "lucide-react";
 import { Outlet, Link } from "react-router";
-import { useFavoritesContext } from "../context/FavoritesContext";
+import { useFavoritesContext } from "../context/useFavoritesContext";
 
 const Layout = () => {
   const { favorites } = useFavoritesContext();

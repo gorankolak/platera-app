@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDebounce } from "react-use";
-import DishCard from "../components/DishCard";
-import { fetchCountryByCity } from "../services/geo";
-import { matchCountryToArea, fetchMealsByArea } from "../services/meals";
-import EmptyState from "../components/EmptyState";
-import Button from "../components/Button";
 import { MapPinX, Search } from "lucide-react";
 
+import DishCard from "../components/DishCard";
+import EmptyState from "../components/EmptyState";
+import Button from "../components/Button";
+
+import { fetchCountryByCity } from "../services/geo";
+import { matchCountryToArea, fetchMealsByArea } from "../services/meals";
+import type { MealPreview } from "../types/mealdb";
+
 const SearchResults = () => {
-  const { city } = useParams();
-  const [debouncedCity, setDebouncedCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [area, setArea] = useState("");
-  const [dishes, setDishes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { city } = useParams<{ city?: string }>();
   const navigate = useNavigate();
+
+  const [debouncedCity, setDebouncedCity] = useState<string>("");
+  const [country, setCountry] = useState<string | null>(null);
+  const [area, setArea] = useState<string | null>(null);
+  const [dishes, setDishes] = useState<MealPreview[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useDebounce(
     () => {
-      setDebouncedCity(city);
+      if (city) {
+        setDebouncedCity(city);
+      }
     },
     500,
     [city],
@@ -30,9 +36,9 @@ const SearchResults = () => {
   useEffect(() => {
     if (!debouncedCity || debouncedCity.length < 2) return;
 
-    const getData = async () => {
+    const getCountry = async () => {
       setLoading(true);
-      setError("");
+      setError(null);
 
       try {
         const countryName = await fetchCountryByCity(debouncedCity);
@@ -49,10 +55,10 @@ const SearchResults = () => {
       }
     };
 
-    getData();
+    getCountry();
   }, [debouncedCity]);
 
-  // Step 2: Once we have country, fetch areas from TheMealDB
+  // Step 2: Match country to cuisine area
   useEffect(() => {
     if (!country) return;
 
@@ -73,7 +79,7 @@ const SearchResults = () => {
     getArea();
   }, [country]);
 
-  // Step 3: Fetch dishes from matched area
+  // Step 3: Fetch dishes for area
   useEffect(() => {
     if (!area) return;
 
@@ -98,14 +104,15 @@ const SearchResults = () => {
     getDishes();
   }, [area]);
 
-  if (loading) return <p className="p-4 text-center">Loading...</p>;
-  if (error)
+  if (loading) {
+    return <p className="p-4 text-center">Loading...</p>;
+  }
+
+  if (error) {
     return (
       <EmptyState
         title={error}
-        message={
-          "We couldn't find any culinary gems for that loaction. Please try checking the spelling or search for another city"
-        }
+        message="We couldn't find any culinary gems for that location. Please try checking the spelling or search for another city."
         icon={<MapPinX className="mb-16 h-20 w-20 text-gray-400" />}
         action={
           <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
@@ -114,6 +121,9 @@ const SearchResults = () => {
         }
       />
     );
+  }
+
+  if (!area) return null;
 
   return (
     <div className="px-4 py-6">

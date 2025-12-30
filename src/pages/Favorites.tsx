@@ -1,6 +1,8 @@
-import { Heart, HeartOff, MapIcon, MapPin, Search } from "lucide-react";
-import { useFavoritesContext } from "../context/FavoritesContext";
+import { Heart, HeartOff, MapPin, Search } from "lucide-react";
 import { useNavigate } from "react-router";
+import type { MouseEvent } from "react";
+
+import { useFavoritesContext } from "../context/useFavoritesContext";
 import EmptyState from "../components/EmptyState";
 import Button from "../components/Button";
 import DishCard from "../components/DishCard";
@@ -13,8 +15,7 @@ const Favorites = () => {
     return (
       <EmptyState
         title="No favorite dishes yet!"
-        message="Your saved dishes will appear here. Start exploring cuisines and tap the heart
-  icon to keep track of meals you love."
+        message="Your saved dishes will appear here. Start exploring cuisines and tap the heart icon to keep track of meals you love."
         icon={<HeartOff className="mb-16 h-20 w-20 text-gray-400" />}
         action={
           <Button fullWidth icon={<Search />} onClick={() => navigate("/")}>
@@ -38,7 +39,7 @@ const Favorites = () => {
               action={
                 <button
                   type="button"
-                  onClick={(e) => {
+                  onClick={(e: MouseEvent<HTMLButtonElement>) => {
                     e.stopPropagation();
                     removeFavorite(dish.idMeal);
                   }}

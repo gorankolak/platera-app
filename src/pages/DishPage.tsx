@@ -1,18 +1,50 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useFavoritesContext } from "../context/FavoritesContext";
-import { fetchDishById } from "../services/meals";
 import { Heart } from "lucide-react";
+
+import { useFavoritesContext } from "../context/useFavoritesContext";
+import { fetchDishById } from "../services/meals";
+import type { Meal } from "../types/mealdb";
 import Button from "../components/Button";
 
+type IngredientItem = {
+  ingredient: string;
+  measure?: string;
+};
+
+const getIngredientList = (dish: Meal): IngredientItem[] => {
+  const ingredients: IngredientItem[] = [];
+
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = dish[`strIngredient${i}` as keyof Meal];
+    const measure = dish[`strMeasure${i}` as keyof Meal];
+
+    if (typeof ingredient === "string" && ingredient.trim()) {
+      ingredients.push({
+        ingredient,
+        measure: typeof measure === "string" ? measure : undefined,
+      });
+    }
+  }
+
+  return ingredients;
+};
+
 const DishPage = () => {
-  const { id } = useParams();
-  const [dish, setDish] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { id } = useParams<{ id: string }>();
+  const [dish, setDish] = useState<Meal | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesContext();
 
   useEffect(() => {
+    if (!id) {
+      setError("Invalid dish ID");
+      setLoading(false);
+      return;
+    }
+
     const getDish = async () => {
       setLoading(true);
       setError("");
@@ -35,28 +67,11 @@ const DishPage = () => {
     getDish();
   }, [id]);
 
-  const getIngredientList = (dish) => {
-    const ingredients = [];
-
-    for (let i = 1; i <= 20; i++) {
-      const ingredient = dish[`strIngredient${i}`];
-      const measure = dish[`strMeasure${i}`];
-
-      if (ingredient && ingredient.trim()) {
-        ingredients.push({ ingredient, measure });
-      }
-    }
-
-    return ingredients;
-  };
-
   if (loading) return <p className="p-4">Loading dish...</p>;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
+  if (!dish) return null;
 
   const isFav = isFavorite(dish.idMeal);
-  const iconClasses = `mr-2 ${
-    isFav ? "text-mediumgray" : "fill-white text-white"
-  }`;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
@@ -66,7 +81,9 @@ const DishPage = () => {
           alt={dish.strMeal}
           className="h-96 w-full rounded-3xl object-cover"
         />
+
         <h2 className="text-4xl font-bold">{dish.strMeal}</h2>
+
         <section className="flex flex-col gap-2">
           <h3 className="text-xl font-semibold">Ingredients</h3>
           <div className="rounded-3xl bg-white p-4">

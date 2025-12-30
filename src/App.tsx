@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
@@ -8,8 +7,6 @@ import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
