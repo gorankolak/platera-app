@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import { fetchCountryByCity } from "../services/geo";
 import { matchCountryToArea, fetchMealsByArea } from "../services/meals";
 import type { MealPreview } from "../types/mealdb";
+import DishCardSkeleton from "../components/DishCardSkeleton";
 
 const SearchResults = () => {
   const { city } = useParams<{ city?: string }>();
@@ -119,7 +120,22 @@ const SearchResults = () => {
   }, [area]);
 
   if (loading) {
-    return <p className="p-4 text-center">Loading...</p>;
+    return (
+      <div className="px-4 py-6">
+        <div className="flex flex-col gap-8 lg:gap-10">
+          <header className="flex flex-col items-center gap-2 text-center">
+            <div className="h-8 w-64 animate-pulse rounded bg-gray-200" />
+            <div className="h-4 w-48 animate-pulse rounded bg-gray-200" />
+          </header>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <DishCardSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {

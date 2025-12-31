@@ -6,6 +6,7 @@ import { useFavoritesContext } from "../context/useFavoritesContext";
 import { fetchDishById } from "../services/meals";
 import type { Meal } from "../types/mealdb";
 import Button from "../components/Button";
+import DishPageSkeleton from "../components/DishPageSkeleton";
 
 type IngredientItem = {
   ingredient: string;
@@ -69,7 +70,9 @@ const DishPage = () => {
     void getDish();
   }, [id]);
 
-  if (loading) return <p className="p-4">Loading dish...</p>;
+  if (loading) {
+    return <DishPageSkeleton />;
+  }
   if (error) return <p className="p-4 text-red-500">{error}</p>;
   if (!dish) return null;
 
