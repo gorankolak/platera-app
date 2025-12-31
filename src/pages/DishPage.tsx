@@ -84,46 +84,67 @@ const DishPage = () => {
           className="h-96 w-full rounded-3xl object-cover"
         />
 
-        <h2 className="text-4xl font-bold">{dish.strMeal}</h2>
+        <div className="flex items-start justify-between gap-4">
+          <h2 className="text-4xl font-bold">{dish.strMeal}</h2>
 
-        <section className="flex flex-col gap-2">
-          <h3 className="text-xl font-semibold">Ingredients</h3>
-          <div className="rounded-3xl bg-white p-4">
-            <ul className="list-inside list-disc">
+          <Button
+            variant="ghost"
+            icon={
+              <Heart
+                className={isFav ? "fill-amber text-amber" : "text-mediumgray"}
+              />
+            }
+            onClick={() => {
+              isFav ? removeFavorite(dish.idMeal) : addFavorite(dish);
+            }}
+            className="hidden sm:flex"
+          >
+            {isFav ? "Saved" : "Save"}
+          </Button>
+        </div>
+
+        <section className="flex flex-col gap-3">
+          <h3 className="text-darkgray text-lg font-semibold">Ingredients</h3>
+
+          <div className="rounded-2xl bg-gray-50 p-4">
+            <ul className="grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
               {getIngredientList(dish).map((item, index) => (
-                <li
-                  key={index}
-                  className="border-gray-100 p-4 not-last:border-b"
-                >
-                  {item.measure} {item.ingredient}
+                <li key={index} className="flex items-baseline gap-2 text-sm">
+                  {item.measure && (
+                    <span className="text-mediumgray whitespace-nowrap">
+                      {item.measure}
+                    </span>
+                  )}
+                  <span className="font-medium">{item.ingredient}</span>
                 </li>
               ))}
             </ul>
           </div>
         </section>
 
-        <Button
-          fullWidth
-          variant={isFav ? "secondary" : "primary"}
-          icon={
-            <Heart
-              className={isFav ? "text-mediumgray" : "fill-white text-white"}
-            />
-          }
-          onClick={() => {
-            if (isFav) {
-              removeFavorite(dish.idMeal);
-            } else {
-              addFavorite(dish);
+        <div className="sm:hidden">
+          <Button
+            fullWidth
+            variant={isFav ? "secondary" : "primary"}
+            icon={
+              <Heart
+                className={isFav ? "text-mediumgray" : "fill-white text-white"}
+              />
             }
-          }}
-        >
-          {isFav ? "Remove from Favorites" : "Add to Favorites"}
-        </Button>
+            onClick={() => {
+              isFav ? removeFavorite(dish.idMeal) : addFavorite(dish);
+            }}
+          >
+            {isFav ? "Remove from Favorites" : "Add to Favorites"}
+          </Button>
+        </div>
 
-        <section className="flex flex-col gap-2">
+        <section className="flex flex-col gap-3">
           <h3 className="text-xl font-semibold">Instructions</h3>
-          <p className="whitespace-pre-line">{dish.strInstructions}</p>
+
+          <p className="text-darkgray text-base leading-relaxed whitespace-pre-line">
+            {dish.strInstructions}
+          </p>
         </section>
 
         {dish.strYoutube && (
