@@ -32,9 +32,24 @@ const SearchResults = () => {
     [city],
   );
 
+  // Reset state when city changes
+  useEffect(() => {
+    setCountry(null);
+    setArea(null);
+    setDishes([]);
+    setError(null);
+    setLoading(false);
+  }, [debouncedCity]);
+
   // Step 1: Fetch country from city
   useEffect(() => {
-    if (!debouncedCity || debouncedCity.length < 2) return;
+    if (!debouncedCity) return;
+
+    if (debouncedCity.length < 2) {
+      setLoading(false);
+      setError("Please enter at least 2 characters.");
+      return;
+    }
 
     const getCountry = async () => {
       setLoading(true);
@@ -48,7 +63,6 @@ const SearchResults = () => {
           setCountry(countryName);
         }
       } catch (err) {
-        console.error(err);
         setError("Error fetching city data.");
       } finally {
         setLoading(false);
@@ -113,7 +127,7 @@ const SearchResults = () => {
       <EmptyState
         title={error}
         message="We couldn't find any culinary gems for that location. Please try checking the spelling or search for another city."
-        icon={<MapPinX className="mb-16 h-20 w-20 text-gray-400" />}
+        icon={<MapPinX className="mb-8 h-20 w-20 text-gray-400" />}
         action={
           <Button
             fullWidth

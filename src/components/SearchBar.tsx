@@ -34,6 +34,7 @@ const SearchBar = () => {
           type="text"
           placeholder="Enter city name..."
           value={input}
+          minLength={2}
           onChange={handleChange}
           className="text-mediumgray focus:ring-primary/20 block w-full rounded-2xl border-none bg-white py-4 pr-4 pl-12 shadow-sm placeholder:text-gray-400 focus:ring-2"
         />
